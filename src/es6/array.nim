@@ -2,6 +2,17 @@ type JsArray*[T] = ref object
 
 proc length*(self: JsArray): int {.
     importcpp: "#.length", noSideEffect.}
+    ## Gets length of the array. This is a number one higher than the highest element defined in an array.
+proc length*(self: JsArray, x: int): int {.
+    importcpp: "#.length = #", noSideEffect.}
+    ## sets the length of the array. This is a number one higher than the highest element defined in an array.
+
+
+proc toString*(self: JsArray): string {.
+    importcpp: "#.toString(#)", noSideEffect.}
+
+proc toLocaleString*(self: JsArray): string {.
+    importcpp: "#.toLocalString(#)", noSideEffect.}
 proc concat*[T](self: JsArray[T], arrays: varargs[JsArray[T]]): JsArray[T] {.
     importcpp: "#.concat(#)", noSideEffect.}
 
