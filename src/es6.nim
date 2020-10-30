@@ -90,3 +90,32 @@ proc set*(self: PropertyDescriptor, value: any): void {.importjs: "#.set(#)".}
 
 type JsDict*[K, V] = ref object
 type PropertyDescriptorMap* = JsDict[cstring, PropertyDescriptor]
+
+type JsObject = ref object
+
+proc toString*(self: JsObject): string {.importjs: "#.toString()".}
+  ## Returns a string representation of an object
+
+
+proc toLocaleString*(self: JsObject): string {.importjs: "#.toLocaleString()".}
+  ##[ Returns a date converted to a string using the current locale. ]##
+
+proc valueOf*(self: JsObject): JsObject {.importjs: "#.valueOf()".}
+    ##[ Returns the primitive value of the specified object. ]##
+
+proc hasOwnProperty*(self:JsObject, v: PropertyKey): bool {.importjs: "#.hasOwnProperty(#)".}
+    ##[
+     * Determines whether an object has a property with the specified name.
+     * @param v A property name.
+     ]##
+
+proc isPrototypeOf*(self: JsObject ,v: JsObject): bool {.importjs: "#.isPrototypeOf(#)".}
+    ## Determines whether an object exists in another object's prototype chain.
+    ##  @param v Another object whose prototype chain is to be checked.
+
+
+proc propertyIsEnumerable*(self: JsObject v: PropertyKey): bool {.importjs: "#.propertyIsEnumerable(#)".}
+        ##[
+     * Determines whether a specified property is enumerable.
+     * @param v A property name.
+     ]##
