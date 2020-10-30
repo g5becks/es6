@@ -57,17 +57,34 @@ proc encodeURIComponent*(uriComponent: cstring | int | bool): string {.
    @param uriComponent A value representing an encoded URI component.
   ]##
 
-proc escape*(str: cstring): string {.
-    importjs: "escape(#)".}
+proc escape*(str: cstring): string {.importjs: "escape(#)".}
     ##[
   Computes a new string in which certain characters have been replaced by a hexadecimal escape sequence.
   @param string A string value
   ]##
 
-proc unescape(str: cstring): string {.
-    importjs: "unescape(#)".}
+proc unescape*(str: cstring): string {.importjs: "unescape(#)".}
   ##[
   Computes a new string in which hexadecimal escape sequences are replace
   with the character that it represents.
    @param string A string value
   ]##
+
+type Symbol* = ref object
+
+proc toString*(self: Symbol): string {.importjs: "#.toString()".}
+  ##  Returns a string representation of an object.
+
+proc valueOf*(self: Symbol): Symbol {.importjs: "#.valueOf()".}
+type PropertyKey* = cstring|int | Symbol
+
+type PropertyDescriptor* = ref object
+  configurable: bool
+  enumerable: bool
+  value: any
+  writeable: bool
+
+proc get*(self: PropertyDescriptor): any {.importjs: "#.get()".}
+
+proc set*(self: PropertyDescriptor, value: any): void {.importjs: "#.set(#)".}
+
