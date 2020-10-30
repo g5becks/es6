@@ -88,3 +88,5 @@ proc get*(self: PropertyDescriptor): any {.importjs: "#.get()".}
 
 proc set*(self: PropertyDescriptor, value: any): void {.importjs: "#.set(#)".}
 
+type JsDict*[K, V] = ref object
+type PropertyDescriptorMap* = JsDict[cstring, PropertyDescriptor]
