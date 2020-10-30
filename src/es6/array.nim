@@ -1,3 +1,4 @@
+import jsffi
 type JsArray*[T] = ref object
 
 proc length*(self: JsArray): int {.
@@ -7,12 +8,16 @@ proc length*(self: JsArray, x: int): int {.
     importcpp: "#.length = #", noSideEffect.}
     ## sets the length of the array. This is a number one higher than the highest element defined in an array.
 
-
 proc toString*(self: JsArray): string {.
     importcpp: "#.toString(#)", noSideEffect.}
+    ## Returns a string representation of an array.
 
 proc toLocaleString*(self: JsArray): string {.
     importcpp: "#.toLocalString(#)", noSideEffect.}
+    ## Returns a string representation of an array. The elements are converted to string using their toLocalString methods.
+proc pop[T](self: JsArray[T]): T {.
+    importcpp: "#.pop()", noSideEffect.}
+
 proc concat*[T](self: JsArray[T], arrays: varargs[JsArray[T]]): JsArray[T] {.
     importcpp: "#.concat(#)", noSideEffect.}
 
