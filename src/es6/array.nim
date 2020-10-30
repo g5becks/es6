@@ -1,4 +1,3 @@
-import jsffi
 type JsArray*[T] = ref object
 
 proc length*(self: JsArray): int {.
@@ -15,9 +14,9 @@ proc toString*(self: JsArray): string {.
 proc toLocaleString*(self: JsArray): string {.
     importcpp: "#.toLocalString(#)", noSideEffect.}
     ## Returns a string representation of an array. The elements are converted to string using their toLocalString methods.
-proc pop[T](self: JsArray[T]): T {.
+proc pop*[T](self: JsArray[T]): T {.
     importcpp: "#.pop()", noSideEffect.}
-
+    ## Removes the last element from an array and returns it.
 proc concat*[T](self: JsArray[T], arrays: varargs[JsArray[T]]): JsArray[T] {.
     importcpp: "#.concat(#)", noSideEffect.}
 
