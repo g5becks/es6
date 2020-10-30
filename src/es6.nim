@@ -37,32 +37,37 @@ proc decodeURI*(encodedURI: cstring): string {.importjs: "decodeURI(#)".}
  * Gets the unencoded version of an encoded Uniform Resource Identifier (URI).
  * @param encodedURI A value representing an encoded URI.
  ]##
-##[
- * Gets the unencoded version of an encoded component of a Uniform Resource Identifier (URI).
- * @param encodedURIComponent A value representing an encoded URI component.
- ]##
-proc decodeURIComponent(encodedURIComponent: string): string
 
-##[
- * Encodes a text string as a valid Uniform Resource Identifier (URI)
- * @param uri A value representing an encoded URI.
- ]##
-proc encodeURI(uri: string): string
+proc decodeURIComponent*(encodedURIComponent: cstring): string {.
+    importjs: "decodeURIComponent(#)".}
+  ##[
+  * Gets the unencoded version of an encoded component of a Uniform Resource Identifier (URI).
+  * @param encodedURIComponent A value representing an encoded URI component.
+   ]##
 
-##[
- * Encodes a text string as a valid component of a Uniform Resource Identifier (URI).
- * @param uriComponent A value representing an encoded URI component.
- ]##
-proc encodeURIComponent(uriComponent: string | int | bool): string
+proc encodeURI*(uri: cstring): string {.importjs: "encodedURI(#)".}
+    ##[
+   Encodes a text string as a valid Uniform Resource Identifier (URI)
+   @param uri A value representing an encoded URI.
+   ]##
+proc encodeURIComponent*(uriComponent: cstring | int | bool): string {.
+    importjs: "encodeURIComponent(#)".}
+  ##[
+   Encodes a text string as a valid component of a Uniform Resource Identifier (URI).
+   @param uriComponent A value representing an encoded URI component.
+  ]##
 
-##[
- * Computes a new string in which certain characters have been replaced by a hexadecimal escape sequence.
- * @param string A string value
- ]##
-proc escape(string: string): string
+proc escape*(str: cstring): string {.
+    importjs: "escape(#)".}
+    ##[
+  Computes a new string in which certain characters have been replaced by a hexadecimal escape sequence.
+  @param string A string value
+  ]##
 
-##[
- * Computes a new string in which hexadecimal escape sequences are replaced with the character that it represents.
- * @param string A string value
- ]##
-proc unescape(string: string): string
+proc unescape(str: cstring): string {.
+    importjs: "unescape(#)".}
+  ##[
+  Computes a new string in which hexadecimal escape sequences are replace
+  with the character that it represents.
+   @param string A string value
+  ]##
