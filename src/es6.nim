@@ -3,6 +3,12 @@ import jsffi
   Ecmascript 2015 apis
 ]#
 
+type undefined* = ref JsObject
+
+type `null`* = ref JsObject
+
+type never* = ref JsObject
+
 var NaN* {.importjs: "NaN".}: int
 var Infinity* {.importjs: "Infinity".}: int
 
@@ -103,19 +109,22 @@ proc toLocaleString*(self: JsObject): string {.importjs: "#.toLocaleString()".}
 proc valueOf*(self: JsObject): JsObject {.importjs: "#.valueOf()".}
     ##[ Returns the primitive value of the specified object. ]##
 
-proc hasOwnProperty*(self:JsObject, v: PropertyKey): bool {.importjs: "#.hasOwnProperty(#)".}
+proc hasOwnProperty*(self: JsObject, v: PropertyKey): bool {.
+    importjs: "#.hasOwnProperty(#)".}
     ##[
      * Determines whether an object has a property with the specified name.
      * @param v A property name.
      ]##
 
-proc isPrototypeOf*(self: JsObject ,v: JsObject): bool {.importjs: "#.isPrototypeOf(#)".}
+proc isPrototypeOf*(self: JsObject, v: JsObject): bool {.
+    importjs: "#.isPrototypeOf(#)".}
     ## Determines whether an object exists in another object's prototype chain.
     ##  @param v Another object whose prototype chain is to be checked.
 
-
-proc propertyIsEnumerable*(self: JsObject v: PropertyKey): bool {.importjs: "#.propertyIsEnumerable(#)".}
+proc propertyIsEnumerable*(self: JsObject, v: PropertyKey): bool {.
+    importjs: "#.propertyIsEnumerable(#)".}
         ##[
      * Determines whether a specified property is enumerable.
      * @param v A property name.
      ]##
+
