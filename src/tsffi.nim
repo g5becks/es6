@@ -3,15 +3,19 @@ import jsffi
   Ecmascript 2015 apis
 ]#
 
-type undefined* = ref JsObject
+type `true` = bool
 
-type `null`* = ref JsObject
+type `false` = bool
 
-type never* = ref JsObject
+type undefined* = ref JsObj
+
+type `null`* = ref JsObj
+
+type never* = ref JsObj
 
 type unknown* = any
 
-type Record*[K: cstring, V] = JsObject
+type Record*[K: cstring, V] = JsObj
 
 proc newRecord*[K: cstring, V](typ: typedesc, xs: varargs[untyped]): Record[
     K, V] =
@@ -24,7 +28,7 @@ proc eval*(x: cstring): any {.importjs: "eval(#)".}
   ##  Evaluates JavaScript code and executes it.
   ##  @param x A String value that contains valid JavaScript code.
 
-proc parseInt*(s: cstring, radix: int | JsObject = jsUndefined): int {.
+proc parseInt*(s: cstring, radix: int | JsObj = jsUndefined): int {.
     importjs: "parseInt(#)".}
     ## Converts a string to an integer.
     ## @param s A string to convert into a int.
@@ -105,34 +109,74 @@ proc set*(self: PropertyDescriptor, value: any): void {.importjs: "#.set(#)".}
 type JsDict*[K, V] = ref object
 type PropertyDescriptorMap* = JsDict[cstring, PropertyDescriptor]
 
-type JsObject = ref object
+type JsObj = ref object
 
-proc toString*(self: JsObject): string {.importjs: "#.toString()".}
+proc toString*(self: JsObj): string {.importjs: "#.toString()".}
   ## Returns a string representation of an object
 
 
-proc toLocaleString*(self: JsObject): string {.importjs: "#.toLocaleString()".}
+proc toLocaleString*(self: JsObj): string {.importjs: "#.toLocaleString()".}
   ##[ Returns a date converted to a string using the current locale. ]##
 
-proc valueOf*(self: JsObject): JsObject {.importjs: "#.valueOf()".}
+proc valueOf*(self: JsObj): JsObj {.importjs: "#.valueOf()".}
     ##[ Returns the primitive value of the specified object. ]##
 
-proc hasOwnProperty*(self: JsObject, v: PropertyKey): bool {.
+proc hasOwnProperty*(self: JsObj, v: PropertyKey): bool {.
     importjs: "#.hasOwnProperty(#)".}
     ##[
      * Determines whether an object has a property with the specified name.
      * @param v A property name.
      ]##
 
-proc isPrototypeOf*(self: JsObject, v: JsObject): bool {.
+proc isPrototypeOf*(self: JsObj, v: JsObj): bool {.
     importjs: "#.isPrototypeOf(#)".}
     ## Determines whether an object exists in another object's prototype chain.
     ##  @param v Another object whose prototype chain is to be checked.
 
-proc propertyIsEnumerable*(self: JsObject, v: PropertyKey): bool {.
+proc propertyIsEnumerable*(self: JsObj, v: PropertyKey): bool {.
     importjs: "#.propertyIsEnumerable(#)".}
         ##[
      * Determines whether a specified property is enumerable.
      * @param v A property name.
      ]##
+
+type JsArray*[T] = ref object
+
+var x*, y*, z*: int
+proc length*(self: JsArray): int {.
+    importjs: "#.length", noSideEffect.}
+    ## Gets length of the array. This is a number one higher than the highest element defined in an array.
+proc length*(self: JsArray, x: int): int {.
+    importjs: "#.length = #", noSideEffect.}
+    ## sets the length of the array. This is a number one higher than the highest element defined in an array.
+
+proc toString*(self: JsArray): string {.
+    importjs: "#.toString(#)", noSideEffect.}
+    ## Returns a string representation of an array.
+
+proc toLocaleString*(self: JsArray): string {.
+    importjs: "#.toLocalString(#)", noSideEffect.}
+    ## Returns a string representation of an array. The elements are converted to string using their toLocalString methods.
+proc pop*[T](self: JsArray[T]): T {.
+    importjs: "#.pop()", noSideEffect.}
+    ## Removes the last element from an array and returns it.
+
+proc push*[T](self: JsArray[T], items: varargs[T]): int {.
+    importjs: """#.push(#)""".}
+proc concat*[T](self: JsArray[T], arrays: varargs[JsArray[T]]): JsArray[T] {.
+    importjs: "#.concat(#)", noSideEffect.}
+
+
+proc jsArray*[T](items: varargs[T]): JsArray[T] {.
+    importjs: "Array.from(#)", noSideEffect.}
+
+proc map*[T, U](self: JsArray[T], callback: proc(val: T): U): JsArray[U] {.
+    importjs: "#.map(#)", noSideEffect.}
+
+proc map*[T, U](self: JsArray[T], callback: proc(val: T,
+    index: int): U): JsArray[U] {.importjs: "#.map(#)", noSideEffect.}
+
+proc map*[T, U](self: JsArray[T], callback: proc(val: T, index: int,
+    array: JsArray[T]): U): JsArray[U] {.importjs: "#.map(#)", noSideEffect.}
+
 

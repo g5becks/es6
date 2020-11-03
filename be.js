@@ -10,10 +10,10 @@ if (typeof Uint16Array === 'undefined') Uint16Array = Array;
 if (typeof Uint32Array === 'undefined') Uint32Array = Array;
 if (typeof Float32Array === 'undefined') Float32Array = Array;
 if (typeof Float64Array === 'undefined') Float64Array = Array;
-var globalRaiseHook_1357018 = [null];
-var localRaiseHook_1357023 = [null];
-var outOfMemHook_1357026 = [null];
-var unhandledExceptionHook_1357031 = [null];
+var globalRaiseHook_2552018 = [null];
+var localRaiseHook_2552023 = [null];
+var outOfMemHook_2552026 = [null];
+var unhandledExceptionHook_2552031 = [null];
 if (!Math.trunc) {
   Math.trunc = function(v) {
     v = +v;
@@ -22,20 +22,18 @@ if (!Math.trunc) {
   };
 }
 
-var objectID_2085031 = [0];
-function innerHEX60gensym4_2620001() {
-  var result_2620003 = null;
+var x_3047010 = [0];
+var y_3047011 = [0];
+var z_3047012 = [0];
+function jsObj_3047249(t_3047252) {
+  var result_3047255 = null;
 
-  BeforeRet: do {
-    var a_2620004 = null;
-    a_2620004 = {};
-    a_2620004.name = "gary";
-    result_2620003 = a_2620004;
-    break BeforeRet;
-  } while (false);
+    var arr_3047266 = Array.from([]);
+    arr_3047266.push(...[["name", t_3047252["Field0"]]]);
+    result_3047255 = Object.fromEntries(arr_3047266);
 
-  return result_2620003;
+  return result_3047255;
 
 }
-var people_2630025 = innerHEX60gensym4_2620001();
-console.log((people_2630025));
+var me_3047401 = [jsObj_3047249({Field0: "gary"})];
+console.log(...[me_3047401[0]]);
